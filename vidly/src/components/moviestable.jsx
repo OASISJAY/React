@@ -1,33 +1,44 @@
-import React, { Component } from 'react';
-import Like from './common/like';
-import TableHeader from './common/tableheader';
-import TableBody from './common/tablebody';
-
+import React, { Component } from "react";
+import Table from "./common/table";
+import Like from "./common/like";
 
 class MoviesTable extends Component {
-    columns = [
-        { path: 'title', lebal: 'Title' },
-        { path: 'genre.name', lebal: 'Genre' },
-        { path: 'numberInStock', lebal: 'Stock' },
-        { path: 'dailyRentalRate', lebal: 'Rate' },
-        { key: 'like', content: item => <Like onClick={() => this.props.onLike(item)} liked={item.liked} /> },
-        { key: 'delete', content: item => <button onClick={() => this.props.onDelete(item)} type="button" className="btn btn-danger btn-sm">Delete</button> },
-
-    ]
-    render() {
-        const { movies, onDelete, onLike, sortColumn, onSort } = this.props;
-        return (<table className="table">
-            <TableHeader
-                columns={this.columns}
-                sortColumn={sortColumn}
-                onSort={onSort} />
-            <TableBody
-                data={movies}
-                columns={this.columns}
-            />
-
-        </table>);
+  columns = [
+    { path: "title", label: "Title" },
+    { path: "genre.name", label: "Genre" },
+    { path: "numberInStock", label: "Stock" },
+    { path: "dailyRentalRate", label: "Rate" },
+    {
+      key: "like",
+      content: movie => (
+        <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
+      )
+    },
+    {
+      key: "delete",
+      content: movie => (
+        <button
+          onClick={() => this.props.onDelete(movie)}
+          className="btn btn-danger btn-sm"
+        >
+          Delete
+        </button>
+      )
     }
+  ];
+
+  render() {
+    const { movies, onSort, sortColumn } = this.props;
+
+    return (
+      <Table
+        columns={this.columns}
+        data={movies}
+        sortColumn={sortColumn}
+        onSort={onSort}
+      />
+    );
+  }
 }
 
 export default MoviesTable;
