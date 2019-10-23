@@ -7,6 +7,7 @@ import ListGroup from './common/listgroup';
 import { getGenres } from '../services/fakeGenreService';
 import MoviesTable from './moviestable';
 import _ from 'lodash';
+import NavBar from './common/navbar';
 
 class Movies extends Component {
     state = {
@@ -71,32 +72,37 @@ class Movies extends Component {
         const { totalCount, data: movies } = this.getPagedData();
 
         return (
-            <div className="row">
-                <div className="col-3">
-                    <ListGroup
-                        items={this.state.genres}
-                        onItermSelect={this.handleGenreSelect}
-                        selectedItem={this.state.selectedGenre}
-                        onSort={this.handleSort}
-                    />
-                </div>
-                <div className="col">
-                    <p>Showing {totalCount} movies in the database.</p>
-                    <MoviesTable
-                        movies={movies}
-                        sortColumn={sortColumn}
-                        onDelete={this.hander}
-                        onLike={this.handleLike}
-                        onSort={this.handleSort} />
-                    <Pagination
-                        itemsCount={totalCount}
-                        pageSize={pageSize}
-                        currentPage={currentPage}
-                        onPageChange={this.handlePageChange}
-                    />
-                </div>
+            <React.Fragment>
+                <NavBar />
+                <div className="row">
 
-            </div >
+                    <div className="col-3">
+                        <ListGroup
+                            items={this.state.genres}
+                            onItermSelect={this.handleGenreSelect}
+                            selectedItem={this.state.selectedGenre}
+                            onSort={this.handleSort}
+                        />
+                    </div>
+                    <div className="col">
+                        <p>Showing {totalCount} movies in the database.</p>
+                        <MoviesTable
+                            movies={movies}
+                            sortColumn={sortColumn}
+                            onDelete={this.hander}
+                            onLike={this.handleLike}
+                            onSort={this.handleSort} />
+                        <Pagination
+                            itemsCount={totalCount}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={this.handlePageChange}
+                        />
+                    </div>
+
+                </div >
+            </React.Fragment>
+
         );
     }
 }
